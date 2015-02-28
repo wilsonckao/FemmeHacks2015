@@ -5,7 +5,7 @@ declared-services:
     plan: 'IBM Watson Personality Insights Monthly Plan'
 
 applications:
-- name: Feed-back
+- name: AnOwlysis
   command: node app.js
   path: .
   memory: 256M

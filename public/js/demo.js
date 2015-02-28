@@ -109,8 +109,34 @@ $(document).ready(function() {
    * Personality Insights API in a table,
    * just trait names and values.
    */
+
+
+var cnt = 0;
+function findId(tree, id) {
+    var current = tree;
+    console.log(current + " : " + cnt);
+    if(current.children !== undefined) {
+      while(current.children.length > 0) {
+        if (current.id === id) {
+          console.log(current);
+          return current;
+        } else {
+          for(var i = 0; i < current.children.length; i++) {
+            current = findId(current.children[i], id);
+            cnt += 1;
+          }
+        }
+      }
+  }
+}
+
   function showTraits(data) {
-    console.log('showTraits()');
+
+    //Opennness
+    // var openness = findId(data.tree, "Openness");
+    // console.log("Openness : ");
+    // console.log(openness);
+
     $traits.show();
 
     var traitList = flatten(data.tree),
