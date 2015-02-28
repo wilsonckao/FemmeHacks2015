@@ -41,7 +41,7 @@ var personalityInsights = new watson.personality_insights(credentials);
 
 // render index page
 app.get('/', function(req, res) {
-  res.render('index', { content: dummy_text });
+  res.render('index', { content1: dummy_text });
 });
 
 app.post('/', function(req, res) {

@@ -18,16 +18,15 @@
 
  $(function() {
     $( "#tabs" ).tabs();
+    $("#entryTabs").tabs();
   });
 
 $(document).ready(function() {
 
-  var widgetId = 'vizcontainer', // Must match the ID in index.jade
-    widgetWidth = 700, widgetHeight = 700, // Default width and height
-    personImageUrl = 'images/app.png'; // Can be blank
 
   // Jquery variables
-  var $content = $('.content'),
+  var $content1 = $('.content1'),
+    $content2 = $('.content2'),
     $loading = $('.loading'),
     $error = $('.error'),
     $errorMsg = $('.errorMsg'),
@@ -39,20 +38,30 @@ $(document).ready(function() {
    */
   $('.clear-btn').click(function(){
     $('.clear-btn').blur();
-    $content.val('');
+    $content1.val('');
     updateWordsCount();
+  });
+
+   $('.clear-btnn').click(function(){
+    $('.clear-btnn').blur();
+    $content2.val('');
+    updateWordsCountt();
   });
 
   /**
    * Update words count on change
    */
-  $content.change(updateWordsCount);
+  $content1.change(updateWordsCount);
+  $content2.change(updateWordsCountt);
 
   /**
    * Update words count on copy/past
    */
-  $content.bind('paste', function(e) {
+  $content1.bind('paste', function(e) {
     setTimeout(updateWordsCount, 100);
+  });
+  $content2.bind('paste', function(e) {
+    setTimeout(updateWordsCountt, 100);
   });
 
   /**
@@ -70,7 +79,45 @@ $(document).ready(function() {
     $.ajax({
       type: 'POST',
       data: {
-        text: $content.val()
+        text: $content1.val()
+      },
+      url: '/',
+      dataType: 'json',
+      success: function(response) {
+        $loading.hide();
+
+        if (response.error) {
+          showError(response.error);
+        } else {
+          $results.show();
+          showTraits(response);
+          showTextSummary(response);
+          showVizualization(response);
+        }
+
+      },
+      error: function(xhr) {
+        $loading.hide();
+        var error;
+        try {
+          error = JSON.parse(xhr.responseText);
+        } catch(e) {}
+        showError(error.error || error);
+      }
+    });
+  });
+
+  $('.analysis-btnn').click(function(){
+    $('.analysis-btnn').blur();
+    $loading.show();
+    $error.hide();
+    $traits.hide();
+    $results.hide();
+
+    $.ajax({
+      type: 'POST',
+      data: {
+        text: $content2.val()
       },
       url: '/',
       dataType: 'json',
@@ -260,11 +307,21 @@ function flatten( /*object*/ tree) {
   }
 
   function updateWordsCount() {
-    var text = $content.val();
+    var text = $content1.val();
     var wordsCount = text.match(/\S+/g) ? text.match(/\S+/g).length : 0;
     $('.wordsCount').css('color',wordsCount < 100 ? 'red' : 'gray');
     $('.wordsCount').text(wordsCount + ' words');
   }
-  $content.keyup(updateWordsCount);
+  $content1.keyup(updateWordsCount);
   updateWordsCount();
+
+   function updateWordsCountt() {
+    var text = $content2.val();
+    var wordsCount = text.match(/\S+/g) ? text.match(/\S+/g).length : 0;
+    $('.wordsCount').css('color',wordsCount < 100 ? 'red' : 'gray');
+    $('.wordsCount').text(wordsCount + ' words');
+  }
+  $content2.keyup(updateWordsCountt);
+  updateWordsCountt();
+
 });

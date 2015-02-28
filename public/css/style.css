@@ -131,17 +131,24 @@ img {
   height: auto;
 }
 
-#tabs {
-  margin-top: 1em;
+#tabs, #entryTabs {
+   margin-top: 1em;
+   margin-bottom: 1em;
 }
 
 #myChart {
-  width: 100% !important;
-  max-width: 400px !important;
-  height: auto !important;
+  text-align: center;
+  width: 500px;
+  height: auto;
 }
 
 #tabs > ul > li.ui-state-default.ui-corner-top.ui-tabs-active.ui-state-active {
+  background-color: #7475b6;
+  border: none;
+  outline: none;
+}
+
+#entryTabs > ul > li.ui-state-default.ui-corner-top.ui-tabs-active.ui-state-active {
   background-color: #7475b6;
   border: none;
   outline: none;
