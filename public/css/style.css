@@ -118,11 +118,11 @@ h1 {
 }
 
 div.well {
-  height: 400px;
+  height: 80%;
 }
 
 textarea.content.form-control {
-  height: 300px;
+  height: 80%;
 }
 
 img {
@@ -134,6 +134,7 @@ img {
 #tabs, #entryTabs {
    margin-top: 1em;
    margin-bottom: 1em;
+   height: 100% !important;
 }
 
 #myChart {
@@ -146,6 +147,7 @@ img {
   background-color: #7475b6;
   border: none;
   outline: none;
+  
 }
 
 #entryTabs > ul > li.ui-state-default.ui-corner-top.ui-tabs-active.ui-state-active {

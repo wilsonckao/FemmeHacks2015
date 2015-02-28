@@ -69,6 +69,26 @@ $(document).ready(function() {
    * 2. Call the API
    * 3. Call the methods to display the results
    */
+
+  // function sendEmail() {
+  //   console.log("sendEmail");
+  //   var sendgrid = require('sendgrid')('femmehacks', 'isabel')
+
+  //   var payload = {
+  //     to :   'kongsally94@gmail.com',
+  //     from:    'iren@seas.upenn.edu',
+  //     subject: 'You Anowlysis Results',
+  //     text :   'This is a test!!'
+  //   }
+  //   sendgrid.send(payload, function(err,json) {
+  //     if (err) { console.error(err); }
+  //     console.log(json);
+  //   });
+  //  }
+  // $('.email-btn').click(function(){
+  //     sendEmail();
+  // });
+
   $('.analysis-btn').click(function(){
     $('.analysis-btn').blur();
     $loading.show();
@@ -162,22 +182,22 @@ $(document).ready(function() {
    */
 
 
-var cnt = 0;
-function findId(tree, id) {
-    var current = tree;
-    if (current.id === id) {
-      console.log(current);
-      return current;
-    } else {
-      if(current !== undefined && current.children !== undefined) {
+  var cnt = 0;
+  function findId(tree, id) {
+      var current = tree;
+      if (current.id === id) {
         console.log(current);
-        for(var i = 0; i < current.children.length; i++) {
-            current = findId(current.children[i], id);
-            cnt += 1;
+        return current;
+      } else {
+        if(current !== undefined && current.children !== undefined) {
+          console.log(current);
+          for(var i = 0; i < current.children.length; i++) {
+              current = findId(current.children[i], id);
+              cnt += 1;
+          }
         }
       }
-    }
-}
+  }
 
   function showTraits(data) {
 
@@ -276,8 +296,7 @@ function showVizualization(theProfile) {
   var myNewChart = new Chart(ctx).Radar(radarData, {
     pointDot: false
   });
-  myNewChart.reDraw();
-
+ 
 }
 
 /**
