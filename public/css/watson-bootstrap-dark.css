@@ -2087,9 +2087,9 @@ select[multiple].input-lg {
   -webkit-transition: .15s;
   transition: .15s;
 
-  color: #00b2ef;
+  color: #7475b6;
   background-color: transparent;
-  border-color: #00b2ef;
+  border-color: #7475b6;;
 }
 .btn:focus,
 .btn:active:focus,
@@ -2103,7 +2103,7 @@ select[multiple].input-lg {
   /*color: #333333;*/
   text-decoration: none;
   color: #fff;
-  background-color: #00b2ef;
+  background-color: #7475b6;;
 }
 .btn:active,
 .btn.active {

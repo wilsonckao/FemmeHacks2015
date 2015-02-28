@@ -11,16 +11,20 @@ html(lang='en')
     link(rel='shortcut icon', href='/images/favicon.ico', type='image/x-icon')
     link(rel='icon', href='/images/favicon.ico', type='image/x-icon')
     link(rel='stylesheet', href='/css/watson-bootstrap-dark.css')
+    link(rel='stylesheet', href='/css/jquery-ui.min.css')
     link(rel='stylesheet', href='/css/style.css')
 
   body
-    h1 Anowlysis
+    h1
+      img(src='/images/anowlysis.png')
     div.container
       div.row
       block row-content
 
     script(type='text/javascript', src='/js/jquery-1.11.1.min.js')
+    script(type='text/javascript', src='/js/jquery-ui.min.js')
     script(type='text/javascript', src='/js/d3.v2.min.js')
+    script(type='text/javascript', src='/js/chart.min.js')
     script(type='text/javascript', src='/js/demo.js')
     script(type='text/javascript', src='/js/personality.js')
     script(type='text/javascript', src='/js/textsummary.js')

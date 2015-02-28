@@ -16,6 +16,10 @@
 
 'use strict';
 
+ $(function() {
+    $( "#tabs" ).tabs();
+  });
+
 $(document).ready(function() {
 
   var widgetId = 'vizcontainer', // Must match the ID in index.jade
@@ -117,7 +121,6 @@ function findId(tree, id) {
     if (current.id === id) {
       console.log(current);
       return current;
-      break;
     } else {
       if(current !== undefined && current.children !== undefined) {
         console.log(current);
@@ -131,15 +134,10 @@ function findId(tree, id) {
 
   function showTraits(data) {
 
-    //Opennness
-    var openness = findId(data.tree, "Openness");
-    console.log("Openness : ");
-    console.log(openness);
-
     $traits.show();
 
     var traitList = flatten(data.tree),
-      table = $traits;
+    table = $traits;
 
     table.empty();
 
@@ -196,100 +194,50 @@ function findId(tree, id) {
     });
   }
 
-/**
- * Renders the sunburst visualization. The parameter is the tree as returned
- * from the Personality Insights JSON API.
- * It uses the arguments widgetId, widgetWidth, widgetHeight and personImageUrl
- * declared on top of this script.
- */
+/* Renders the visualization*/
+
 function showVizualization(theProfile) {
+  console.log(theProfile);
   console.log('showVizualization()');
+  var intellect = theProfile.tree.children[0].children[0].children[0].children[4];
+  var orderliness = theProfile.tree.children[0].children[0].children[1].children[3];
+  var selfDiscipline = theProfile.tree.children[0].children[0].children[1].children[4];
+  var cooperation = theProfile.tree.children[0].children[0].children[3].children[1];
+  var vulnerability = theProfile.tree.children[0].children[0].children[4].children[5];
 
-  $('#' + widgetId).empty();
-  var d3vis = d3.select('#' + widgetId).append('svg:svg');
-  var widget = {
-    d3vis: d3vis,
-    data: theProfile,
-    loadingDiv: 'dummy',
-    switchState: function() {
-      console.log('[switchState]');
-    },
-    _layout: function() {
-      console.log('[_layout]');
-    },
-    showTooltip: function() {
-      console.log('[showTooltip]');
-    },
-    id: 'SystemUWidget',
-    COLOR_PALLETTE: ['#1b6ba2', '#488436', '#d52829', '#F53B0C', '#972a6b', '#8c564b', '#dddddd'],
-    expandAll: function() {
-      this.vis.selectAll('g').each(function() {
-        var g = d3.select(this);
-        if (g.datum().parent && // Isn't the root g object.
-          g.datum().parent.parent && // Isn't the feature trait.
-          g.datum().parent.parent.parent) { // Isn't the feature dominant trait.
-          g.attr('visibility', 'visible');
+  var radarData = {
+    labels: ["Intellect", "Orderliness", "Self-Discipline", "Cooperation", "Vulnerability"],
+    datasets: [
+        {
+            label: "My First dataset",
+            fillColor: "rgba(116, 117, 182,0.2)",
+            strokeColor: "rgba(116, 117, 182,1)",
+            pointColor: "rgba(116, 117, 182,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(116, 117, 182,1)",
+            data: [(intellect.percentage * 100).toFixed(1), 
+                  (orderliness.percentage * 100).toFixed(1), 
+                  (selfDiscipline.percentage * 100).toFixed(1),
+                  (cooperation.percentage * 100).toFixed(1), 
+                  (vulnerability.percentage * 100).toFixed(1)]
         }
-      });
-    },
-    collapseAll: function() {
-      this.vis.selectAll('g').each(function() {
-        var g = d3.select(this);
-        if (g.datum().parent !== null && // Isn't the root g object.
-          g.datum().parent.parent !== null && // Isn't the feature trait.
-          g.datum().parent.parent.parent !== null) { // Isn't the feature dominant trait.
-          g.attr('visibility', 'hidden');
-        }
-      });
-    },
-    addPersonImage: function(url) {
-      if (!this.vis || !url) {
-        return;
-      }
-      var icon_defs = this.vis.append('defs');
-      var width = this.dimW,
-        height = this.dimH;
-
-      // The flower had a radius of 640 / 1.9 = 336.84 in the original, now is 3.2.
-      var radius = Math.min(width, height) / 16.58; // For 640 / 1.9 -> r = 65
-      var scaled_w = radius * 2.46; // r = 65 -> w = 160
-
-      var id = 'user_icon_' + this.id;
-      icon_defs.append('pattern')
-        .attr('id', id)
-        .attr('height', 1)
-        .attr('width', 1)
-        .attr('patternUnits', 'objectBoundingBox')
-        .append('image')
-        .attr('width', scaled_w)
-        .attr('height', scaled_w)
-        .attr('x', radius - scaled_w / 2) // r = 65 -> x = -25
-        .attr('y', radius - scaled_w / 2)
-        .attr('xlink:href', url)
-        .attr('opacity', 1.0)
-        .on('dblclick.zoom', null);
-      this.vis.append('circle')
-        .attr('r', radius)
-        .attr('stroke-width', 0)
-        .attr('fill', 'url(#' + id + ')');
-    }
+    ]
   };
 
-  widget.dimH = widgetHeight;
-  widget.dimW = widgetWidth;
-  widget.d3vis.attr('width', widget.dimW).attr('height', widget.dimH);
-  widget.d3vis.attr('viewBox', "0 0 " + widget.dimW + ", " + widget.dimH);
-  renderChart.call(widget);
-  widget.expandAll.call(widget);
-  if (personImageUrl)
-    widget.addPersonImage.call(widget, personImageUrl);
+  var ctx = document.getElementById("myChart").getContext("2d");
+  var myNewChart = new Chart(ctx).Radar(radarData, {
+    pointDot: false
+  });
+  myNewChart.reDraw();
+
 }
 
-  /**
-   * Returns a 'flattened' version of the traits tree, to display it as a list
-   * @return array of {id:string, title:boolean, value:string} objects
-   */
-  function flatten( /*object*/ tree) {
+/**
+  * Returns a 'flattened' version of the traits tree, to display it as a list
+  * @return array of {id:string, title:boolean, value:string} objects
+*/
+function flatten( /*object*/ tree) {
     var arr = [],
       f = function(t, level) {
         if (!t) return;
