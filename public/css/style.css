@@ -118,11 +118,15 @@ h1 {
 }
 
 div.well {
-  height: 80%;
+  height: 450px;
 }
 
-textarea.content.form-control {
-  height: 80%;
+textarea.content1.form-control {
+  height: 400px;
+}
+
+textarea.content2.form-control {
+  height: 400px;
 }
 
 img {
@@ -139,7 +143,7 @@ img {
 
 #myChart {
   text-align: center;
-  width: 500px;
+  width: 1000px;
   height: auto;
 }
 

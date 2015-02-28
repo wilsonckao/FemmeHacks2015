@@ -293,6 +293,8 @@ function showVizualization(theProfile) {
   };
 
   var ctx = document.getElementById("myChart").getContext("2d");
+  ctx.canvas.width = 350;
+  ctx.canvas.height = 400;
   var myNewChart = new Chart(ctx).Radar(radarData, {
     pointDot: false
   });
