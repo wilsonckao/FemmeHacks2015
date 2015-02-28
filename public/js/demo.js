@@ -114,28 +114,27 @@ $(document).ready(function() {
 var cnt = 0;
 function findId(tree, id) {
     var current = tree;
-    console.log(current + " : " + cnt);
-    if(current.children !== undefined) {
-      while(current.children.length > 0) {
-        if (current.id === id) {
-          console.log(current);
-          return current;
-        } else {
-          for(var i = 0; i < current.children.length; i++) {
+    if (current.id === id) {
+      console.log(current);
+      return current;
+      break;
+    } else {
+      if(current !== undefined && current.children !== undefined) {
+        console.log(current);
+        for(var i = 0; i < current.children.length; i++) {
             current = findId(current.children[i], id);
             cnt += 1;
-          }
         }
       }
-  }
+    }
 }
 
   function showTraits(data) {
 
     //Opennness
-    // var openness = findId(data.tree, "Openness");
-    // console.log("Openness : ");
-    // console.log(openness);
+    var openness = findId(data.tree, "Openness");
+    console.log("Openness : ");
+    console.log(openness);
 
     $traits.show();
 
