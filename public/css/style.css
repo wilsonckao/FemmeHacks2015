@@ -160,3 +160,11 @@ img {
   outline: none;
 }
 
+#owl {
+  margin-top: 20%;
+}
+
+#owl:hover {
+  cursor:pointer;
+}
+

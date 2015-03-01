@@ -33,6 +33,12 @@ $(document).ready(function() {
     $traits = $('.traits'),
     $results = $('.results');
 
+  $("#functionalities").css({opacity : 0});
+  $('#owl').click(function(){
+    $('#owl').css("display", "none");
+    $("#functionalities").css({opacity : 1});
+  });
+
   /**
    * Clear the "textArea"
    */
