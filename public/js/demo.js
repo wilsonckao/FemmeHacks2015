@@ -33,10 +33,10 @@ $(document).ready(function() {
     $traits = $('.traits'),
     $results = $('.results');
 
-  $("#functionalities").css({opacity : 0});
+  $("#functionalities").css("display", "none");
   $('#owl').click(function(){
     $('#owl').css("display", "none");
-    $("#functionalities").css({opacity : 1});
+    $("#functionalities").css("display", "inline");
   });
 
   /**

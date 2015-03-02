@@ -24,7 +24,6 @@ var express = require('express'),
   fs = require('fs'),
   dummy_text = fs.readFileSync('sample.txt');
 
-
 // Bootstrap application settings
 require('./config/express')(app);
 
@@ -41,7 +40,7 @@ var personalityInsights = new watson.personality_insights(credentials);
 
 // render index page
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('index.html');
 });
 
 app.post('/', function(req, res) {
